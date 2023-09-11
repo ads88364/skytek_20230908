@@ -1,9 +1,10 @@
 <script setup>
   import { ref, computed } from 'vue'
   // 表單資料
-  const lists= ref([{text:'Learn HTML',number:123456,done: true}
-                   ,{text:'Learn JavaScript',number:456798,done: false}
-                   ,{text:'Learn Vue',number:456798,done: false}])
+  const lists= ref([{text:'Learn HTML',number:123,done: true}
+                   ,{text:'Learn CSS',number:456,done: true}
+                   ,{text:'Learn JavaScript',number:798,done: false}
+                   ,{text:'Learn Vue',number:101112,done: false}])
   // 單項刪除
   const remove = (list) => {
       lists.value = lists.value.filter((e) => { return e !== list})
@@ -68,7 +69,9 @@
 
 
 <style scoped>
+  
   .A{
+    left:50%;
     width:500px;
     height:500px;
     display:flex;
