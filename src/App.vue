@@ -1,47 +1,93 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import { ref, computed } from 'vue'
+  // 表單資料
+  const lists= ref([{text:'Learn HTML',number:123456,done: true}
+                   ,{text:'Learn JavaScript',number:456798,done: false}
+                   ,{text:'Learn Vue',number:456798,done: false}])
+  // 單項刪除
+  const remove = (list) => {
+      lists.value = lists.value.filter((e) => { return e !== list})
+    }
+
+  // 新增
+  const newlist = ref('')
+  const addList = () => {
+    lists.value.push({text:newlist.value,done:false})
+     newlist.value = '';
+  }
+
+  // 顯示&隱藏
+  const hideCompleted = ref(false)
+  const changebutton = () => {
+     hideCompleted.value = !hideCompleted.value;
+  }
+
+  const filteredTodos = computed(() => {
+  return hideCompleted.value ?
+    lists.value.filter((list) => !list.done) : lists.value
+  })
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="hahahahahaha" />
+  <div class="A">
+    
+    <h1>Todo List</h1>
+    
+    <div class="B">
+      <form @submit.prevent="addList">       
+        <input v-model="newlist">
+        <button>add</button>
+      </form>
+      
+      <ul class="D">
+         <li v-for="list in filteredTodos">
+           <input type="checkbox" v-model="list.done">
+           <span :class="{'text-underline': list.done}">
+             {{list.text}}
+           </span>
+           <button @click="remove(list)">X</button>
+         </li>
+      </ul>
+      
     </div>
-  </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+    <div class="C">
+    　<button @click="changebutton">
+       {{ hideCompleted ? 'show all' : 'hide completed' }}
+     </button>
+    </div>
+    
+  </div>
+  
 </template>
 
+
+
+
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .A{
+    width:500px;
+    height:500px;
+    display:flex;
+    border:1px solid black;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+  }
+  .B{
+    margin-top:20px;
+  }
+  .C{
+    margin-top:20px;
+  }
+  .D{
+    margin-top:20px;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .text-underline {
+  text-decoration: line-through;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
