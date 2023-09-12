@@ -11,7 +11,7 @@
     }
 
   // 新增
-  const newlist = ref('')
+  const newlist = ref('') // 可以去除 不必多設定一組 方向:解構
   const addList = () => {
     lists.value.push({text:newlist.value,done:false})
      newlist.value = '';
